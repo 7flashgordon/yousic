@@ -327,18 +327,6 @@
         🎵 <strong>Trial Mode:</strong> Rank up to 10 artists total. Sign up coming soon!
     </div>
 
-    <!-- Config Modal -->
-    <div id="configModal" class="modal active">
-        <div class="modal-content">
-            <h3>🎵 Spotify API Setup</h3>
-            <p>Enter your Spotify credentials:</p>
-            <input type="text" id="clientId" placeholder="Client ID" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ccc; border-radius:8px;">
-            <input type="text" id="clientSecret" placeholder="Client Secret" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ccc; border-radius:8px;">
-            <small style="display:block; color:#666; margin-bottom:20px;">Get these at <a href="https://developer.spotify.com/dashboard" target="_blank">developer.spotify.com/dashboard</a></small>
-            <button class="btn btn-primary" onclick="saveCredentials()">Save & Start</button>
-        </div>
-    </div>
-
     <div class="container">
         <!-- Landing -->
         <section id="landing" class="landing active">
@@ -393,9 +381,9 @@
     </div>
 
     <script>
-        // Config
-        let SPOTIFY_CLIENT_ID = '';
-        let SPOTIFY_CLIENT_SECRET = '';
+        // Config - Hardcoded for user testing
+        let SPOTIFY_CLIENT_ID = '87db4b4b4cfc4c938cd82a682242d9b1';
+        let SPOTIFY_CLIENT_SECRET = '1dcb5ec6e9664b888aee83cf8b59df47';
         let spotifyToken = null;
         let tokenExpiry = null;
 
@@ -411,30 +399,6 @@
             maxArtists: 10,
             initialLimit: 5
         };
-
-        // Load credentials
-        const savedCreds = localStorage.getItem('yousic_spotify_creds');
-        if (savedCreds) {
-            const creds = JSON.parse(savedCreds);
-            SPOTIFY_CLIENT_ID = creds.clientId;
-            SPOTIFY_CLIENT_SECRET = creds.clientSecret;
-            document.getElementById('configModal').classList.remove('active');
-        }
-
-        function saveCredentials() {
-            const clientId = document.getElementById('clientId').value.trim();
-            const clientSecret = document.getElementById('clientSecret').value.trim();
-            
-            if (!clientId || !clientSecret) {
-                alert('Please enter both credentials');
-                return;
-            }
-            
-            SPOTIFY_CLIENT_ID = clientId;
-            SPOTIFY_CLIENT_SECRET = clientSecret;
-            localStorage.setItem('yousic_spotify_creds', JSON.stringify({ clientId, clientSecret }));
-            document.getElementById('configModal').classList.remove('active');
-        }
 
         // Spotify API
         async function getSpotifyToken() {
